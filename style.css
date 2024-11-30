@@ -21,9 +21,9 @@ body {
     padding-top: 20px;
     position: sticky;
     top: 0;
-    height: 100vh; /* Ensure the sidebar spans the entire height of the viewport */
+    height: 100vh; /* Ensure sidebar spans the entire height */
     display: flex;
-    flex-direction: column; /* Stack the content vertically */
+    flex-direction: column; /* Stack items vertically */
     justify-content: flex-start; /* Ensure the sidebar content stays at the top */
 }
 
@@ -48,7 +48,7 @@ body {
     padding: 20px;
     width: 100%;
     max-width: 1200px;
-    margin-left: 270px; /* Ensures content doesn't overlap with sidebar */
+    margin-left: 270px; /* Prevents overlap with the sidebar */
 }
 
 /* Tabs */
@@ -79,7 +79,7 @@ body {
     display: block;
 }
 
-/* Ensure the footer spans the full width */
+/* Footer */
 footer {
     background-color: #333;
     color: white;

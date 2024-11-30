@@ -7,55 +7,75 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="sidebar">
-        <ul>
-            <li><a href="javascript:void(0);" onclick="showTab('bibleTab')">Bible</a></li>
-            <li><a href="javascript:void(0);" onclick="showTab('notesTab')">Notes</a></li>
-            <li><a href="javascript:void(0);" onclick="showTab('prayerTab')">Prayer</a></li>
-        </ul>
+    <div class="sidebar">
+        <a href="#bible" onclick="showTab('bible')">Bible</a>
+        <a href="#notes" onclick="showTab('notes')">Notes</a>
+        <a href="#prayers" onclick="showTab('prayers')">Prayers</a>
     </div>
-
-    <div id="content">
-        <!-- Bible Tab Content -->
-        <div id="bibleTab" class="tabContent">
-            <h2>Bible</h2>
-            <label for="chapter">Enter Chapter/Verse (e.g., John 3:16):</label>
-            <input type="text" id="chapter" placeholder="Enter Chapter and Verse" />
-            <button onclick="loadBible()">Load Bible</button>
-            <div id="bibleContent">
-                <!-- Bible content will appear here -->
-            </div>
+    <div class="content">
+        <div class="tabs">
+            <button class="tabButton" onclick="showTabContent('bible')">Bible</button>
+            <button class="tabButton" onclick="showTabContent('notes')">Notes</button>
+            <button class="tabButton" onclick="showTabContent('prayers')">Prayers</button>
         </div>
 
-        <!-- Notes Tab Content -->
-        <div id="notesTab" class="tabContent">
-            <h2>Notes</h2>
-            <textarea id="notes" placeholder="Write your notes here..." rows="10" cols="50"></textarea>
+        <div id="bible" class="tabContent active">
+            <label for="chapter">Select a chapter:</label>
+            <select id="chapter" onchange="fetchChapter()">
+                <option value="John 1">John 1</option>
+                <option value="John 2">John 2</option>
+                <option value="John 3">John 3</option>
+                <!-- Add more chapters as needed -->
+            </select>
+            <div id="verses"></div>
         </div>
 
-        <!-- Prayer Tab Content -->
-        <div id="prayerTab" class="tabContent">
-            <h2>Prayer</h2>
-            <div>
-                <h3>Daily</h3>
-                <textarea id="dailyPrayer" placeholder="Write your daily prayer here..." rows="5" cols="50"></textarea>
-            </div>
-            <div>
-                <h3>Weekly</h3>
-                <textarea id="weeklyPrayer" placeholder="Write your weekly prayer here..." rows="5" cols="50"></textarea>
-            </div>
-            <div>
-                <h3>Monthly</h3>
-                <textarea id="monthlyPrayer" placeholder="Write your monthly prayer here..." rows="5" cols="50"></textarea>
-            </div>
-            <div>
-                <h3>As Needed</h3>
-                <textarea id="asNeededPrayer" placeholder="Write your prayer for when needed..." rows="5" cols="50"></textarea>
-            </div>
+        <div id="notes" class="tabContent">
+            <h2>Notes Section</h2>
+            <textarea placeholder="Write your notes here..." style="width: 100%; height: 300px;"></textarea>
+        </div>
+
+        <div id="prayers" class="tabContent">
+            <h2>Prayers Section</h2>
+            <textarea placeholder="Write your prayers here..." style="width: 100%; height: 300px;"></textarea>
         </div>
     </div>
+    <footer>
+        <p>Powered by Bible Study</p>
+    </footer>
 
-    <script src="script.js"></script>
+    <script>
+        function showTab(tabId) {
+            var tabs = document.querySelectorAll('.tabContent');
+            tabs.forEach(function(tab) {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function showTabContent(contentId) {
+            var content = document.querySelectorAll('.tabContent');
+            content.forEach(function(tab) {
+                tab.classList.remove('active');
+            });
+            document.getElementById(contentId).classList.add('active');
+        }
+
+        function fetchChapter() {
+            var chapter = document.getElementById('chapter').value;
+            fetch(`https://bible-api.com/${chapter}?translation=kjv`)
+                .then(response => response.json())
+                .then(data => {
+                    var versesDiv = document.getElementById('verses');
+                    versesDiv.innerHTML = ''; // Clear previous verses
+                    data.verses.forEach(function(verse, index) {
+                        var verseElement = document.createElement('p');
+                        verseElement.innerHTML = `<strong>${chapter} ${verse.chapter}:${verse.verse}</strong> ${verse.text}`;
+                        versesDiv.appendChild(verseElement);
+                    });
+                });
+        }
+    </script>
 </body>
 </html>
 
