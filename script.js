@@ -19,10 +19,17 @@ function loadBible() {
                 return;
             }
 
-            const verses = data.verses.map(verse => 
-                `<p><strong>${verse.reference}:</strong> ${verse.text}</p>`
-            ).join('');
-            bibleContent.innerHTML = verses || "<p>No verses found.</p>";
+            // Check if the response has verses and display them properly
+            if (data.verses && data.verses.length > 0) {
+                const verses = data.verses.map(verse => {
+                    // Ensure verse reference is shown properly
+                    const reference = verse.reference ? `<strong>${verse.reference}:</strong>` : "";
+                    return `<p>${reference} ${verse.text}</p>`;
+                }).join('');
+                bibleContent.innerHTML = verses;
+            } else {
+                bibleContent.innerHTML = "<p>No verses found for this input.</p>";
+            }
         })
         .catch(error => {
             bibleContent.innerHTML = "<p>Error fetching data from the Bible API.</p>";
