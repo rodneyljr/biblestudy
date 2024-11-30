@@ -1,58 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bible Study Website</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bible Study - King James Version</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
 </head>
 <body>
-  <div id="container">
-    <!-- Left Navigation -->
-    <nav id="sidebar">
-      <ul>
-        <li><button onclick="showTab('bible')">Bible</button></li>
-        <li><button onclick="showTab('notes')">Notes</button></li>
-        <li><button onclick="showTab('prayer')">Prayer</button></li>
-      </ul>
-    </nav>
+    <div id="bibleTab">
+        <h1>Bible Study - King James Version</h1>
 
-    <!-- Main Content Area -->
-    <div id="content">
-      <!-- Bible Section -->
-      <div id="bible" class="tab">
-        <h1>Bible - King James Version</h1>
-        <div id="bible-text">
-          <!-- Placeholder for Bible content -->
-        </div>
-      </div>
+        <!-- Dropdown to select chapter -->
+        <label for="chapterSelect">Select Chapter:</label>
+        <select id="chapterSelect" onchange="fetchBibleChapter()">
+            <option value="John+1">John 1</option>
+            <option value="John+2">John 2</option>
+            <option value="John+3">John 3</option>
+            <!-- Add more chapters as needed -->
+        </select>
 
-      <!-- Notes Section -->
-      <div id="notes" class="tab" style="display:none;">
-        <h1>Notes</h1>
-        <textarea id="notes-input" placeholder="Write your notes here..."></textarea>
-        <button onclick="saveNotes()">Save Notes</button>
-        <p><strong>Saved Notes:</strong></p>
-        <div id="saved-notes"></div>
-      </div>
-
-      <!-- Prayer Section -->
-      <div id="prayer" class="tab" style="display:none;">
-        <h1>Prayer</h1>
-        <div id="prayer-categories">
-          <h2>Daily</h2>
-          <textarea id="prayer-daily" placeholder="Daily prayers..."></textarea>
-          <h2>Weekly</h2>
-          <textarea id="prayer-weekly" placeholder="Weekly prayers..."></textarea>
-          <h2>Monthly</h2>
-          <textarea id="prayer-monthly" placeholder="Monthly prayers..."></textarea>
-          <h2>As Needed</h2>
-          <textarea id="prayer-needed" placeholder="As needed prayers..."></textarea>
-        </div>
-      </div>
+        <!-- Bible content will be inserted here by JavaScript -->
+        <div id="bibleContent"></div>
     </div>
-  </div>
-  <script src="script.js"></script>
+
+    <script>
+        // Function to fetch the Bible chapter dynamically
+        async function fetchBibleChapter() {
+            // Get selected chapter from the dropdown
+            const chapter = document.getElementById('chapterSelect').value;
+            
+            // Fetch the data from the API
+            const response = await fetch(`https://bible-api.com/${chapter}`);
+            const data = await response.json();
+
+            // Display the chapter content
+            let chapterText = '';
+            data.verses.forEach(verse => {
+                chapterText += `<p><strong>${verse.reference}:</strong> ${verse.text}</p>`;
+            });
+
+            // Insert the content into the page
+            document.getElementById('bibleContent').innerHTML = chapterText;
+        }
+
+        // Load the default chapter (John 1) when the page loads
+        window.onload = fetchBibleChapter;
+    </script>
 </body>
 </html>
 
