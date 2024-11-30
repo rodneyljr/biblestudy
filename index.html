@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bible Study Website</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="container">
+    <!-- Left Navigation -->
+    <nav id="sidebar">
+      <ul>
+        <li><button onclick="showTab('bible')">Bible</button></li>
+        <li><button onclick="showTab('notes')">Notes</button></li>
+        <li><button onclick="showTab('prayer')">Prayer</button></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div id="content">
+      <!-- Bible Section -->
+      <div id="bible" class="tab">
+        <h1>Bible - King James Version</h1>
+        <div id="bible-text">
+          <!-- Placeholder for Bible content -->
+        </div>
+      </div>
+
+      <!-- Notes Section -->
+      <div id="notes" class="tab" style="display:none;">
+        <h1>Notes</h1>
+        <textarea id="notes-input" placeholder="Write your notes here..."></textarea>
+        <button onclick="saveNotes()">Save Notes</button>
+        <p><strong>Saved Notes:</strong></p>
+        <div id="saved-notes"></div>
+      </div>
+
+      <!-- Prayer Section -->
+      <div id="prayer" class="tab" style="display:none;">
+        <h1>Prayer</h1>
+        <div id="prayer-categories">
+          <h2>Daily</h2>
+          <textarea id="prayer-daily" placeholder="Daily prayers..."></textarea>
+          <h2>Weekly</h2>
+          <textarea id="prayer-weekly" placeholder="Weekly prayers..."></textarea>
+          <h2>Monthly</h2>
+          <textarea id="prayer-monthly" placeholder="Monthly prayers..."></textarea>
+          <h2>As Needed</h2>
+          <textarea id="prayer-needed" placeholder="As needed prayers..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+
