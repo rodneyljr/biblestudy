@@ -11,13 +11,20 @@
     <div id="bibleTab">
         <h1>Bible Study - King James Version</h1>
 
+        <!-- Dropdown to select book -->
+        <label for="bookSelect">Select Book:</label>
+        <select id="bookSelect" onchange="updateChapterDropdown()">
+            <option value="genesis">Genesis</option>
+            <option value="john">John</option>
+            <option value="romans">Romans</option>
+            <option value="psalms">Psalms</option>
+            <!-- Add more books as needed -->
+        </select>
+
         <!-- Dropdown to select chapter -->
         <label for="chapterSelect">Select Chapter:</label>
         <select id="chapterSelect" onchange="fetchBibleChapter()">
-            <option value="John+1">John 1</option>
-            <option value="John+2">John 2</option>
-            <option value="John+3">John 3</option>
-            <!-- Add more chapters as needed -->
+            <!-- Chapters will be added dynamically here -->
         </select>
 
         <!-- Bible content will be inserted here by JavaScript -->
@@ -25,17 +32,55 @@
     </div>
 
     <script>
+        // Function to update the chapters dropdown based on selected book
+        function updateChapterDropdown() {
+            const book = document.getElementById('bookSelect').value;
+            const chapterSelect = document.getElementById('chapterSelect');
+
+            // Clear previous chapters
+            chapterSelect.innerHTML = '';
+
+            // Set chapters for each book
+            let chapters = [];
+            switch (book) {
+                case 'genesis':
+                    chapters = Array.from({ length: 50 }, (_, i) => i + 1); // Genesis has 50 chapters
+                    break;
+                case 'john':
+                    chapters = Array.from({ length: 21 }, (_, i) => i + 1); // John has 21 chapters
+                    break;
+                case 'romans':
+                    chapters = Array.from({ length: 16 }, (_, i) => i + 1); // Romans has 16 chapters
+                    break;
+                case 'psalms':
+                    chapters = Array.from({ length: 150 }, (_, i) => i + 1); // Psalms has 150 chapters
+                    break;
+                // Add more books and chapter counts as needed
+            }
+
+            // Populate the chapters dropdown
+            chapters.forEach(chapter => {
+                const option = document.createElement('option');
+                option.value = chapter;
+                option.textContent = chapter;
+                chapterSelect.appendChild(option);
+            });
+
+            // Automatically fetch the first chapter when the book is selected
+            fetchBibleChapter();
+        }
+
         // Function to fetch the Bible chapter dynamically
         async function fetchBibleChapter() {
-            // Get selected chapter from the dropdown
+            const book = document.getElementById('bookSelect').value;
             const chapter = document.getElementById('chapterSelect').value;
-            
+
             // Fetch the data from the API
-            const response = await fetch(`https://bible-api.com/${chapter}`);
+            const response = await fetch(`https://bible-api.com/${book}+${chapter}?translation=kjv`);
             const data = await response.json();
 
             // Display the chapter content
-            let chapterText = '';
+            let chapterText = `<h2>${book.charAt(0).toUpperCase() + book.slice(1)} Chapter ${chapter}</h2>`;
             data.verses.forEach(verse => {
                 chapterText += `<p><strong>${verse.reference}:</strong> ${verse.text}</p>`;
             });
@@ -44,8 +89,11 @@
             document.getElementById('bibleContent').innerHTML = chapterText;
         }
 
-        // Load the default chapter (John 1) when the page loads
-        window.onload = fetchBibleChapter;
+        // Load default content for Genesis 1 when the page loads
+        window.onload = function() {
+            updateChapterDropdown();
+            fetchBibleChapter();
+        };
     </script>
 </body>
 </html>
