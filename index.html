@@ -3,129 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bible Study - King James Version</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
-    <style>
-        /* Basic Layout for the page */
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            margin: 0;
-        }
-        
-        /* Sidebar styles */
-        #sidebar {
-            width: 200px;
-            background-color: #333;
-            color: white;
-            padding-top: 20px;
-            position: fixed;
-            height: 100%;
-            top: 0;
-        }
-        
-        #sidebar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            margin: 10px 0;
-            text-align: center;
-        }
-        
-        #sidebar a:hover {
-            background-color: #575757;
-        }
-
-        /* Main content area */
-        #content {
-            margin-left: 220px;
-            padding: 20px;
-            width: 100%;
-        }
-
-        #bibleContent {
-            margin-top: 20px;
-        }
-    </style>
+    <title>Bible Study</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Sidebar with Tabs -->
     <div id="sidebar">
-        <a href="#bible" id="bibleTabLink">Bible</a>
-        <a href="#notes" id="notesTabLink">Notes</a>
-        <a href="#prayer" id="prayerTabLink">Prayer</a>
+        <ul>
+            <li><a href="#bibleTab" onclick="showTab('bibleTab')">Bible</a></li>
+            <li><a href="#notesTab" onclick="showTab('notesTab')">Notes</a></li>
+            <li><a href="#prayerTab" onclick="showTab('prayerTab')">Prayer</a></li>
+        </ul>
     </div>
 
-    <!-- Main Content Area -->
     <div id="content">
-        <h1>Bible Study - King James Version</h1>
-
-        <!-- Bible Tab -->
-        <div id="bibleTab">
+        <div id="bibleTab" class="tabContent">
             <h2>Bible</h2>
-            <label for="referenceInput">Enter Book and Chapter/Verse (e.g., John 3:16 or Romans 5):</label>
-            <input type="text" id="referenceInput" placeholder="Enter reference..." oninput="fetchBibleReference()">
-            
-            <div id="bibleContent"></div>
+            <label for="chapter">Enter Chapter/Verse (e.g., John 3:16):</label>
+            <input type="text" id="chapter" placeholder="Enter Chapter and Verse" />
+            <button onclick="loadBible()">Load Bible</button>
+            <div id="bibleContent">
+                <!-- Bible content will appear here -->
+            </div>
         </div>
 
-        <!-- Notes Tab -->
-        <div id="notesTab">
+        <div id="notesTab" class="tabContent">
             <h2>Notes</h2>
-            <p>Here you can add your notes.</p>
+            <!-- Notes content here -->
         </div>
 
-        <!-- Prayer Tab -->
-        <div id="prayerTab">
+        <div id="prayerTab" class="tabContent">
             <h2>Prayer</h2>
-            <p>Daily, Weekly, Monthly, and As Needed Prayer sections.</p>
+            <div>
+                <h3>Daily</h3>
+                <!-- Daily prayers content here -->
+            </div>
+            <div>
+                <h3>Weekly</h3>
+                <!-- Weekly prayers content here -->
+            </div>
+            <div>
+                <h3>Monthly</h3>
+                <!-- Monthly prayers content here -->
+            </div>
+            <div>
+                <h3>As Needed</h3>
+                <!-- As Needed prayers content here -->
+            </div>
         </div>
     </div>
 
-    <script>
-        // Function to fetch the Bible reference based on user input
-        async function fetchBibleReference() {
-            const reference = document.getElementById('referenceInput').value.trim();
-
-            // Basic validation: Check if the input matches the pattern for a valid reference
-            const regex = /^([a-zA-Z]+)(\s?)(\d+)([:]\d+)?$/; // Match book name, chapter, and optional verse
-            const match = reference.match(regex);
-
-            if (match) {
-                const book = match[1].toLowerCase();
-                const chapter = match[3];
-                const verse = match[4] ? match[4].substring(1) : null; // Remove ':' from verse part if present
-                
-                // Fetch the Bible content based on the user's input
-                let apiUrl = `https://bible-api.com/${book}+${chapter}`;
-                if (verse) apiUrl += `:${verse}`;
-                apiUrl += "?translation=kjv"; // Use King James Version
-
-                try {
-                    const response = await fetch(apiUrl);
-                    const data = await response.json();
-
-                    if (data.verses && data.verses.length > 0) {
-                        let chapterText = `<h2>${book.charAt(0).toUpperCase() + book.slice(1)} Chapter ${chapter}</h2>`;
-                        data.verses.forEach(verse => {
-                            chapterText += `<p><strong>${verse.reference}:</strong> ${verse.text}</p>`;
-                        });
-
-                        // Display the content in the bibleContent div
-                        document.getElementById('bibleContent').innerHTML = chapterText;
-                    } else {
-                        document.getElementById('bibleContent').innerHTML = `<p>No verses found for the reference "${reference}".</p>`;
-                    }
-                } catch (error) {
-                    document.getElementById('bibleContent').innerHTML = `<p>Error fetching Bible data. Please check your reference.</p>`;
-                }
-            } else {
-                document.getElementById('bibleContent').innerHTML = `<p>Invalid reference. Please enter a valid book and chapter/verse (e.g., John 3:16).</p>`;
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
 
