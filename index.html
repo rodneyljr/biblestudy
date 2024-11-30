@@ -9,13 +9,14 @@
 <body>
     <div id="sidebar">
         <ul>
-            <li><a href="#bibleTab" onclick="showTab('bibleTab')">Bible</a></li>
-            <li><a href="#notesTab" onclick="showTab('notesTab')">Notes</a></li>
-            <li><a href="#prayerTab" onclick="showTab('prayerTab')">Prayer</a></li>
+            <li><a href="javascript:void(0);" onclick="showTab('bibleTab')">Bible</a></li>
+            <li><a href="javascript:void(0);" onclick="showTab('notesTab')">Notes</a></li>
+            <li><a href="javascript:void(0);" onclick="showTab('prayerTab')">Prayer</a></li>
         </ul>
     </div>
 
     <div id="content">
+        <!-- Bible Tab Content -->
         <div id="bibleTab" class="tabContent">
             <h2>Bible</h2>
             <label for="chapter">Enter Chapter/Verse (e.g., John 3:16):</label>
@@ -26,28 +27,30 @@
             </div>
         </div>
 
+        <!-- Notes Tab Content -->
         <div id="notesTab" class="tabContent">
             <h2>Notes</h2>
-            <!-- Notes content here -->
+            <textarea id="notes" placeholder="Write your notes here..." rows="10" cols="50"></textarea>
         </div>
 
+        <!-- Prayer Tab Content -->
         <div id="prayerTab" class="tabContent">
             <h2>Prayer</h2>
             <div>
                 <h3>Daily</h3>
-                <!-- Daily prayers content here -->
+                <textarea id="dailyPrayer" placeholder="Write your daily prayer here..." rows="5" cols="50"></textarea>
             </div>
             <div>
                 <h3>Weekly</h3>
-                <!-- Weekly prayers content here -->
+                <textarea id="weeklyPrayer" placeholder="Write your weekly prayer here..." rows="5" cols="50"></textarea>
             </div>
             <div>
                 <h3>Monthly</h3>
-                <!-- Monthly prayers content here -->
+                <textarea id="monthlyPrayer" placeholder="Write your monthly prayer here..." rows="5" cols="50"></textarea>
             </div>
             <div>
                 <h3>As Needed</h3>
-                <!-- As Needed prayers content here -->
+                <textarea id="asNeededPrayer" placeholder="Write your prayer for when needed..." rows="5" cols="50"></textarea>
             </div>
         </div>
     </div>

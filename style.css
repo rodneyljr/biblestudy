@@ -1,0 +1,89 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Sidebar */
+#sidebar {
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    color: white;
+    padding-top: 20px;
+}
+
+#sidebar ul {
+    list-style-type: none;
+}
+
+#sidebar ul li {
+    margin: 10px 0;
+}
+
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    background-color: #444;
+}
+
+/* Content area */
+#content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+/* Tabs */
+.tabContent {
+    display: none;
+}
+
+h2, h3 {
+    color: #2c3e50;
+}
+
+input[type="text"], textarea {
+    padding: 8px;
+    margin: 10px 0;
+    width: 80%;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+#bibleContent p {
+    margin: 10px 0;
+}
+
+#bibleContent strong {
+    color: #3498db;
+}
+
